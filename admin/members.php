@@ -233,13 +233,13 @@ $confirm = isset($_GET['confirm']) ? $_GET['confirm'] : false;
 		}
 		else if($list == "authors") {
 			$where = " WHERE ap.stories > 0";
-			$authorlink = "<a href=\"user.php?action=editbio&amp;uid=";
+			$authorlink = "<a href=\"member.php?action=editbio&amp;uid=";
 			$output .= _AUTHORS;
 		}
 		else {
 			$where = "";
 			$do = "members";
-			$authorlink = "<a href=\"user.php?action=editbio&amp;uid=";
+			$authorlink = "<a href=\"member.php?action=editbio&amp;uid=";
 			$output .= _MEMBERS;
 		}
 		if($let == _OTHER) {

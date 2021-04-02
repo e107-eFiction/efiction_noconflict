@@ -93,7 +93,7 @@ if(empty($favorites)) accessDenied( );
 				}
 			}
 			$author = implode(",", $author);
-			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"user.php?action=favau&amp;".( $add ? "add=$author" : "edit=$edit")."\">\n
+			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=favau&amp;".( $add ? "add=$author" : "edit=$edit")."\">\n
 				<div style=\"width: 350px; margin: 0 auto; text-align: left;\"><label for=\"comments\">"._COMMENTS.":</label><br />
 				<textarea class=\"textbox\" name=\"comments\" id=\"comments\" cols=\"40\" rows=\"5\">".(isset($info['comments']) ? $info['comments'] : "")."</textarea><br />
 				<INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></div></form>";
@@ -114,7 +114,7 @@ if(empty($favorites)) accessDenied( );
 					$cmt->newBlock("comment");
 					$cmt->assign("comment", format_story($author['comments']));
 					if(USERUID == $uid) 
-					$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"user.php?action=favau&amp;edit=".$author['uid']."\">"._EDIT."</a> | <a href=\"user.php?action=favau&amp;delete=".$author['uid']."\">"._REMOVEFAV."</a></div>");
+					$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"member.php?action=favau&amp;edit=".$author['uid']."\">"._EDIT."</a> | <a href=\"member.php?action=favau&amp;delete=".$author['uid']."\">"._REMOVEFAV."</a></div>");
 					$cmt->assign("oddeven", ($x % 2 ? "odd" : "even"));
 					$output .= $cmt->getOutputContent( );
 					$x++;

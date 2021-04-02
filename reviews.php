@@ -379,7 +379,7 @@ else {
 			$reviewer = $reviews['reviewer'];
 			$member = _ANONYMOUS;
 		}
-		if(empty($reviews['respond']) && (USERUID == $authoruid || (isset($coauthors) && in_array(USERUID, $coauthors)))) $adminlink .= " [<a href=\"user.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
+		if(empty($reviews['respond']) && (USERUID == $authoruid || (isset($coauthors) && in_array(USERUID, $coauthors)))) $adminlink .= " [<a href=\"member.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
 		$tpl->newBlock("reviewsblock");
 		$tpl->assign("reviewer"   , $reviewer );
 		$tpl->assign("reportthis", "[<a href=\""._BASEDIR."contact.php?action=report&amp;url=reviews.php?reviewid=".$reviews['reviewid']."\">"._REPORTTHIS."</a>]");

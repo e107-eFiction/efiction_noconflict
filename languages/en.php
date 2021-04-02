@@ -28,7 +28,7 @@ define ("_ALLSTORIES", "All Stories");
 define ("_ALPHA", "Alphabetically");
 define ("_ANONYMOUS", "Anonymous");
 define ("_AUTHORSNOTES", "Author's Notes");
-define ("_BACK2ACCT", "Back to <a href=\"user.php\">your account</a> area.");
+define ("_BACK2ACCT", "Back to <a href=\"member.php\">your account</a> area.");
 define ("_BACK2ADMIN", "Back to <a href=\"admin.php\">Admin</a> area.");
 define ("_BACK2CATS", "Back to Main Categories");
 define ("_BACK2PREVIOUS", "Back to Previous.");
@@ -284,11 +284,11 @@ define ("_USETINYMCE", "Use tinyMCE WYSWYG editor");
 
 // User - Edit Bio/Registration (default)
 define ("_AOL", "AOL IM");
-define ("_BADEMAIL", "That address doesn't appear to be in our database. Please <a href=\"user.php?action=lostpassword\">try again.</a>");
+define ("_BADEMAIL", "That address doesn't appear to be in our database. Please <a href=\"member.php?action=lostpassword\">try again.</a>");
 define ("_BADUSERNAME", "Sorry! Usernames can only contain letters, numbers, underscores, hyphens, or spaces, and must be between 3 and 20 characters long.");
 define ("_BIO", "Bio");
 define ("_EDITPERSONAL", "Edit Personal Information");
-define ("_EMAILINUSE", "This email address has already been used to sign up for an account. If you've lost your password, please generate a new one by using the <a href=\"user.php?action=lostpassword\">lost password</a> feature.");
+define ("_EMAILINUSE", "This email address has already been used to sign up for an account. If you've lost your password, please generate a new one by using the <a href=\"member.php?action=lostpassword\">lost password</a> feature.");
 define ("_ICQ", "ICQ");
 define ("_INVALIDEMAIL", "The e-mail address you supplied is an invalid format.");
 define ("_NEWACCOUNT", "New Account");
@@ -296,9 +296,9 @@ define ("_NEWPEN", "%1\$s ( %2\$d ) changed penname %3\$s ( %4\$d ) to %5\$s.");
 define ("_MSN", "MSN IM");
 define ("_PASSWORD", "Password");
 define ("_PASSWORD2", "Confirm Password");
-define ("_PASSWORDTWICE", "You must enter your new password twice. Please <a href=\"user.php?action=".$action."\">try again</a>.");
+define ("_PASSWORDTWICE", "You must enter your new password twice. Please <a href=\"member.php?action=".$action."\">try again</a>.");
 define ("_PWDREQUIRED", "A password is required to access this function.");
-define ("_PENEMAILREQUIRED", "You must fill out the penname and email fields. Please <a href=\"user.php?action=newaccount\">try again</a>.");
+define ("_PENEMAILREQUIRED", "You must fill out the penname and email fields. Please <a href=\"member.php?action=newaccount\">try again</a>.");
 define ("_PENNAMEINUSE", "This penname is already in use.");
 define ("_REALNAME", "Real name");
 define ("_REGISTER", "Register");
@@ -320,7 +320,7 @@ define ("_FILENAME", "Filename");
 define ("_FILENOTEXISTS", "The file <strong>%s</strong> does not exist.");
 define ("_IMAGE", "Image");
 define ("_IMAGECODE", "HTML code to use image in story");
-define ("_IMAGETOOBIG", "This image is too big. Images may only be $imagewidth wide by $imageheight high. Please <a href=\"user.php?action=manageimages&upload=upload\">try again</a>.");
+define ("_IMAGETOOBIG", "This image is too big. Images may only be $imagewidth wide by $imageheight high. Please <a href=\"member.php?action=manageimages&upload=upload\">try again</a>.");
 define ("_INVALIDNAME", "Sorry, the filename contains invalid characters. Use only alphanumerical chars and separate parts of the name (if needed) with an underscore. <br>A valid filename ends with one dot followed by the extension.");
 define ("_MANAGEIMAGES", "Manage Images");
 define ("_MAXFILENAME", "The filename exceeds the maximum length of %s characters.");
@@ -364,7 +364,7 @@ define ("_REMOVEFAV", "Remove Favorite");
 
 // User - Login
 
-define ("_WRONGPASSWORD", "That password doesn't match the one in our database. Please <a href=\"user.php?action=login\">try again</a> or retrieve a <a href=\"user.php?action=lostpassword\">new password</a> if you can't remember yours.");
+define ("_WRONGPASSWORD", "That password doesn't match the one in our database. Please <a href=\"member.php?action=login\">try again</a> or retrieve a <a href=\"member.php?action=lostpassword\">new password</a> if you can't remember yours.");
 define ("_ACCOUNTLOCKED", "This account has been locked by the adminstrators of this site.  Please <a href='contact.php'>contact</a> the site adminstrators for more information.");
 define ("_NOSUCHACCOUNT", "There is no such account on our website."); // Added 6-18-2008
 

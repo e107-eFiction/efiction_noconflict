@@ -73,7 +73,7 @@ if(isMEMBER) accessDenied( );
 		else $output .= write_message(_BADEMAIL);
 	}
 	else {
-		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"user.php?action=lostpassword\">
+		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=lostpassword\">
 		<table align=\"center\" width=\"300\">
 		<tr><td>"._ENTEREMAIL."</td></tr>
 		<tr><td><INPUT  type=\"text\" class=\"textbox=\" name=\"email\"> <INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></form>

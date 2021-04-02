@@ -70,7 +70,7 @@ if(empty($favorites)) accessDenied( );
 			$query = dbquery("SELECT * FROM ".TABLEPREFIX."fanfiction_favorites WHERE uid = '".USERUID."' AND type = 'SE' AND item = '$edit' LIMIT 1");
 			$info = dbassoc($query);
 		}			
-		$tpl->assign("pagelinks", "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"user.php?action=favse&amp;add=1&amp;seriesid=".($add ? $add : $edit)."\">\n
+		$tpl->assign("pagelinks", "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=favse&amp;add=1&amp;seriesid=".($add ? $add : $edit)."\">\n
 			<div style=\"width: 350px; margin: 0 auto; text-align: left;\"><label for=\"comments\">"._COMMENTS.":</label><br />
 			<textarea class=\"textbox\" name=\"comments\" id=\"comments\" cols=\"40\" rows=\"5\">".(isset($info['comments']) ? $info['comments'] : "")."</textarea><br />
 			<INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></div></form>");
@@ -93,7 +93,7 @@ if(empty($favorites)) accessDenied( );
 			$cmt->newBlock("comment");
 			$cmt->assign("comment", $stories['comments'] ? "<div class='comments'><span class='label'>"._COMMENTS.": </span>".strip_tags($stories['comments'])."</div>" : "");
 			if(USERUID == $uid) 
-				$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"user.php?action=favse&amp;edit=".$stories['seriesid']."\">"._EDIT."</a> | <a href=\"user.php?action=favse&amp;delete=".$stories['seriesid']."\">"._REMOVEFAV."</a></div>");
+				$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"member.php?action=favse&amp;edit=".$stories['seriesid']."\">"._EDIT."</a> | <a href=\"member.php?action=favse&amp;delete=".$stories['seriesid']."\">"._REMOVEFAV."</a></div>");
 			$cmt->assign("oddeven", ($count % 2 ? "odd" : "even"));
 			$tpl->assign("comment", $cmt->getOutputContent( ));
 			$count++;

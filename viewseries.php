@@ -82,11 +82,11 @@ if($reviewsallowed && (isMEMBER || $anonreviews)) {
 	$jumpmenu .= "<option value=\"reviews.php?action=add&amp;type=SE&amp;item=$seriesid\">"._SUBMITREVIEW."</option>";
 }
 if(isMEMBER && $favorites) {
-	$addtofaves = "[<a href=\"user.php?action=favse&amp;uid=".USERUID."&amp;add=$seriesid\">"._ADDSERIES2FAVES."</a>]";
-	$jumpmenu .= "<option value=\"user.php?action=favse&amp;uid=".USERUID."&amp;add=$seriesid\">"._ADDSERIES2FAVES."</option>";
+	$addtofaves = "[<a href=\"member.php?action=favse&amp;uid=".USERUID."&amp;add=$seriesid\">"._ADDSERIES2FAVES."</a>]";
+	$jumpmenu .= "<option value=\"member.php?action=favse&amp;uid=".USERUID."&amp;add=$seriesid\">"._ADDSERIES2FAVES."</option>";
 	if($series['isopen'] == 0) { // Only closed series.
-		$addtofaves .= " [<a href=\"user.php?action=favau&amp;uid=".USERUID."&amp;add=".$series['uid']."\">"._ADDAUTHOR2FAVES."</a>]";
-		$jumpmenu .= "<option value=\"user.php?action=favau&amp;uid=".USERUID."&amp;add=".$series['uid']."\">"._ADDAUTHOR2FAVES."</option>";
+		$addtofaves .= " [<a href=\"member.php?action=favau&amp;uid=".USERUID."&amp;add=".$series['uid']."\">"._ADDAUTHOR2FAVES."</a>]";
+		$jumpmenu .= "<option value=\"member.php?action=favau&amp;uid=".USERUID."&amp;add=".$series['uid']."\">"._ADDAUTHOR2FAVES."</option>";
 	}
 }
 if($series['isopen'] && isMEMBER) {

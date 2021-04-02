@@ -113,7 +113,7 @@ if(!defined("_CHARSET")) exit( );
 			$revlist->assign("member", $member );
 			$revlist->assign("oddeven", "odd");
 			$output .= $revlist->getOutputContent( );
-			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"user.php?action=revres\">";
+			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=revres\">";
 			$output .= "<INPUT type=\"hidden\" name=\"rid\" value=\"$reviewid\">
 				<div style=\"text-align: center;\"><label for=\"response\">"._AUTHORSRESPONSE.":</label><span style='clear: left;'>&nbsp;</span></div>
 				<div class='shorttextarea'><textarea class=\"textbox\" name=\"response\" id=\"response\" style='width: 100%;' rows=\"5\"></TEXTAREA></div>";

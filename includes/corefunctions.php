@@ -252,7 +252,7 @@ function title_link($stories) {
 				$warning = _AGECHECK." - "._AGECONSENT." ".$warningtext." -- 1";
 			}
 			if($warninglevel[0] && !isMEMBER) {
-				$location = "user.php?action=login&amp;sid=".$stories['sid'];
+				$location = "member.php?action=login&amp;sid=".$stories['sid'];
 				$warning = _RUSERSONLY." - $warningtext";		
 			}
 			if(!empty($warning)) {

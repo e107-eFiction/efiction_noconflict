@@ -84,7 +84,7 @@ if($reviewcount) {
 			$reviewer = $reviews['reviewer'];
 			$member = _ANONYMOUS;
 		}
-		if(!empty($authoruid) && USERUID == $authoruid) $adminlink .= " [<a href=\"user.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
+		if(!empty($authoruid) && USERUID == $authoruid) $adminlink .= " [<a href=\"member.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
 		$revlist->newBlock("reviewsblock");
 		$revlist->assign("reviewer"   , $reviewer );
 		$revlist->assign("review"   , $reviews['review']);

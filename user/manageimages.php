@@ -166,7 +166,7 @@ if($imageupload) {
 		buildImageList( );
 	}
 	if(isset($_GET['upload']) && !isset($_POST['submit'])) {
-			$output .= "<form method=\"post\" action=\"user.php?action=manageimages&upload=upload\" ENCTYPE=\"multipart/form-data\">
+			$output .= "<form method=\"post\" action=\"member.php?action=manageimages&upload=upload\" ENCTYPE=\"multipart/form-data\">
 					<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$max_size\">";
 			for($x = 1; $x < 6; $x++) {
 				$output .= "<div style='width: 300px; margin: 0 auto;'><label for='upfile$x'>"._IMAGE." $x:</label><input id=\"upfile$x\" type=\"file\" class=\"textbox\" name=\"upfile[]\"></div>";
@@ -206,12 +206,12 @@ if($imageupload) {
 		while($filename = readdir($directory)) {
 			if($filename=="." || $filename==".." || $filename == "imagelist.js") continue;
 			list($imght, $imgwth, $type, $attr) = getimagesize("$folder/$filename");
-			$output .= "<tr><td class='tblborder'>$filename</td><td class='tblborder'>&#60;img src=\"$folder/$filename\"&#62;</td><td class='tblborder' style='text-align: center;'><a href=\"javascript:pop('$folder/$filename', $imgwth, $imght, 'yes')\">"._VIEW."</a> | <a href=\"user.php?action=manageimages&amp;delete=$filename\" onclick=\"return confirm('"._CONFIRMDELETE."')\">"._DELETE."</a></td></tr>";
+			$output .= "<tr><td class='tblborder'>$filename</td><td class='tblborder'>&#60;img src=\"$folder/$filename\"&#62;</td><td class='tblborder' style='text-align: center;'><a href=\"javascript:pop('$folder/$filename', $imgwth, $imght, 'yes')\">"._VIEW."</a> | <a href=\"member.php?action=manageimages&amp;delete=$filename\" onclick=\"return confirm('"._CONFIRMDELETE."')\">"._DELETE."</a></td></tr>";
 			$count++;
 		}
 		if($count == 0) $output .= "<tr><td colspan='3' style='text-align: center;'>"._NORESULTS."</td></tr>";
 		$output .= "</table></div>";
-		$output .= write_message("<a href=\"user.php?action=manageimages&amp;upload=upload\">"._UPLOADIMAGE."</a>");
+		$output .= write_message("<a href=\"member.php?action=manageimages&amp;upload=upload\">"._UPLOADIMAGE."</a>");
 
 	}
 }
