@@ -36,9 +36,13 @@ Note: e107 clears sessions, so class2.php has to be loaded after get_session_var
 
 ### search.php
 
+rename to searching.php for efiction
+
 ### news.php
 
 ### index.php
+e107 has to be used
+- added recent menu to e107 menus
 
 ### contact.php
 

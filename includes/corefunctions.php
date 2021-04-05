@@ -523,7 +523,7 @@ function charlist($characters) {
 }
 
 // Most of the pages that list stories and series use this fuction.  This handles showing the series and stories and pagination of the two together when needed
-function search($storyquery, $countquery, $pagelink = "search.php?", $pagetitle = 0) {
+function search($storyquery, $countquery, $pagelink = "searching.php?", $pagetitle = 0) {
 	global $tpl, $new, $ratingslist, $itemsperpage, $reviewsallowed, $output, $dateformat, $current, $featured, $favorites, $retired, $ageconsent, $classtypelist, $classlist, $offset, $recentdays;
      
 	$count = dbquery($countquery);
