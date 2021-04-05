@@ -2,10 +2,11 @@
 
 IN DEVELOPMENT Still standalone efiction version but without conflicts with e107
 
-This is just backup a notes...
+This is just backup and notes...
+THIS REPO contains files before changing efiction code itself. Main reason is for it is to have be able to start from beginning if integration ends badly. 
 
 
-## Database 
+## Database changes 
 *None*
 
 Use the same prefix.
@@ -40,13 +41,15 @@ rename to searching.php for efiction
 
 ### news.php
 
+removed
+
 ### index.php
 e107 has to be used
 - added recent menu to e107 menus
 
 ### contact.php
 
-
+removed
 
 Just notes: 
 
