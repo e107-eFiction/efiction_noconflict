@@ -27,11 +27,20 @@ index.php
 news.php
 user.php
 search.php
+contact.php
 
 ### user.php
 rename to member.php for efiction
 
 Note: e107 clears sessions, so class2.php has to be loaded after get_session_vars.php  
+
+### search.php
+
+### news.php
+
+### index.php
+
+### contact.php
 
 
 
