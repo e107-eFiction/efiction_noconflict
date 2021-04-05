@@ -47,6 +47,8 @@ removed
 e107 has to be used
 - added recent menu to e107 menus
 
+- if you use it (you can), it will be overriden with e107 github sync, so just have backup
+
 ### contact.php
 
 removed
