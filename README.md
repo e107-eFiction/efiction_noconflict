@@ -51,7 +51,7 @@ e107 has to be used
 
 ### contact.php
 
-removed
+file can't be deleted because reporting 
 
 Just notes: 
 
