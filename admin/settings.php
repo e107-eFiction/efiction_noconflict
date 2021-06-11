@@ -49,7 +49,7 @@ function updatePanelOrder( ) {
 	}
 }
 
-if($action == "settings") {
+if(isset($action) && $action == "settings") {
 $output .= "<h1>"._SETTINGS."</h1><div style='text-align: center;'>
 	<a href='admin.php?action=settings&amp;sect=main'>"._MAINSETTINGS."</a> |
 	<a href='admin.php?action=settings&amp;sect=submissions'>"._SUBMISSIONSETTINGS."</a> |
@@ -182,7 +182,7 @@ if(isset($_POST['submit'])) {
 		$$var = stripslashes($val);
 	}
 
-	$output .= "<form method='POST' class='tblborder' style='' enctype='multipart/form-data' action='".($action == "settings" ? "admin.php?action=settings" : $_SERVER['PHP_SELF']."?step=".$_GET['step'])."&amp;sect=$sect'>";
+	$output .= "<form method='POST' class='tblborder' style='' enctype='multipart/form-data' action='".(isset($action) &&  $action == "settings" ? "admin.php?action=settings" : $_SERVER['PHP_SELF']."?step=".$_GET['step'])."&amp;sect=$sect'>";
 	if($sect == "main") {
 		$output .= "<h2>"._SITEINFO."</h2>
 		<table class='acp'>

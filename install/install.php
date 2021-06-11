@@ -60,20 +60,21 @@ header ("Pragma: no-cache");
 header ("Expires: 0"); 
 
 $output = "";
+$language = "en";
 
 include ("../includes/class.TemplatePower.inc.php");
 
-if(!isset($_GET['step']) || $_GET['step'] == 2) {
+if(!isset($_GET['step']) || $_GET['step'] == 2) {   
 	include ("../languages/en.php");
 	include ("../languages/en_admin.php");
 	include ("languages/en.php");
 }
 else if(isset($_REQUEST['language'])) {
 	$language = $_REQUEST['language'];
-	if(file_exists("../languages/".$language.".php")) include ("../languages/".$language.".php");
-	else include ("../languages/en.php");
-	if(file_exists("../languages/".$language."_admin.php")) include("../languages/".$language."_admin.php");
-	else include ("../languages/en_admin.php");
+ 	if(file_exists("../languages/".$language.".php")) include ("../languages/".$language.".php");
+ 	else include ("../languages/en.php");
+ 	if(file_exists("../languages/".$language."_admin.php")) include("../languages/".$language."_admin.php");
+ 	else include ("../languages/en_admin.php");
 	if(file_exists("languages/".$language.".php")) include("languages/".$language.".php");
 	else include ("languages/en.php");
 }
@@ -146,14 +147,15 @@ $tpl->newBlock("footer");
 $tpl->assign( "footer", "eFiction $version &copy; 2007. <a href='http://efiction.org/'>http://efiction.org/</a>");
 $tpl->gotoBlock( "_ROOT" );
 
-switch($_GET['step']) {
+$step = isset($_GET["step"]) ? $_GET["step"] : "";
+switch($step) {
 	case "9":
 		if(isset($_POST['submit'])) {
 			$penname = descript($_POST['newpenname']);
 			if((!$_POST['email']) && !isADMIN) $fail .= "<div style='text-align: center;'>"._EMAILREQUIRED." "._TRYAGAIN."</div>";
 			if($penname && !preg_match("!^[a-z0-9_ ]{3,30}$!i", $penname)) $fail = "<div style='text-align: center;'>"._BADUSERNAME." "._TRYAGAIN."</div>";
-			if(!preg_match("/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+$/", $_POST[email])) $fail = "<div style='text-align: center;'>"._INVALIDEMAIL." "._TRYAGAIN."</div>";
-			if($_POST['password'] == $_POST['password2']) $encryptpassword = md5($_POST[password]);
+			if(!preg_match("/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+$/", $_POST['email'])) $fail = "<div style='text-align: center;'>"._INVALIDEMAIL." "._TRYAGAIN."</div>";
+			if($_POST['password'] == $_POST['password2']) $encryptpassword = md5($_POST['password']);
 			else $fail =  write_message(_PASSWORDTWICE);
 			if(!isset($fail)) {
 				$result = dbquery("INSERT INTO ".$tableprefix."fanfiction_authors(`penname`, `email`, `password`, `date`) VALUES('$penname', '".$_POST['email']."', '$encryptpassword', now( ))");
@@ -161,11 +163,13 @@ switch($_GET['step']) {
 				$skinquery = dbquery("SELECT skin FROM ".$settingsprefix."fanfiction_settings WHERE sitekey = '".SITEKEY."'");
 				list($skin) = dbrow($skinquery);
 				$result2 = dbquery("INSERT INTO ".$tableprefix."fanfiction_authorprefs(`uid`, `userskin`, `level`) VALUES('".USERUID."', '$skin', '1')");
-				if($result && $result2) $output .= write_message(_ACTIONSUCCESSFUL."<br /><br />Installation complete!  <a href='../user.php?action=login'>Log in</a> to your site and go to the Admin area to configure your archive. <strong>Note:</strong> Please delete the install/ folder!");
+				if($result && $result2) $output .= write_message(_ACTIONSUCCESSFUL."<br /><br />Installation complete!  <a href='../member.php?action=login'>Log in</a> to your site and go to the Admin area to configure your archive. <strong>Note:</strong> Please delete the install/ folder!");
 			}
 			else $output .= $fail;
 		}
 		else {
+            if(!isset($user['penname'])) $user['penname'] = '';
+            if(!isset($user['email'])) $user['email'] = '';
 			$output .= "<div id='pagetitle'>"._ADMINACCT."</div><form method=\"POST\" class='tblborder' style='margin: 1em auto; width: 400px;' enctype=\"multipart/form-data\" action=\"install.php?step=9\">
 			<div class='row'><label for='newpenname'>"._PENNAME.":</label> <INPUT name=\"newpenname\" type=\"text\" class=\"textbox\" maxlength=\"200\" value=\"$user[penname]\"></div>
 		 	<div class='row'><label for='email'>"._EMAIL.":</label> <INPUT  type=\"text\" class=\"textbox=\" name=\"email\" value=\"$user[email]\" maxlength=\"200\"></div>
@@ -784,7 +788,7 @@ $output .= write_message(_TABLEFAILED."<br /><br /><a href='install.php?step=4'>
 				$settingsresults = dbquery("SELECT * FROM ".$settingsprefix."fanfiction_settings WHERE sitekey = '".SITEKEY."'");
 			}
 			$settings = dbassoc($settingsresults);
-			define("_BASEDIR", "../");
+            if (!defined("_BASEDIR")) define('constant', define("_BASEDIR", "../"));
 			foreach($settings as $var => $val) {
 				$$var = $val;
 			}
@@ -814,7 +818,7 @@ $output .= write_message(_TABLEFAILED."<br /><br /><a href='install.php?step=4'>
 			else include("../admin/settings.php");
 		}
 		else {
-			if($_GET['install']) {
+			if(isset($_GET['install'])) {
 				if($_GET['install'] == "automatic") {
 			
 								$settings = dbquery("CREATE TABLE IF NOT EXISTS `".$settingsprefix."fanfiction_settings` (

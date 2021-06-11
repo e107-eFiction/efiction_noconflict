@@ -8,6 +8,19 @@ define('_OTHER', 'Other');
 $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', _OTHER);
 
 // General...used in many pages.
+if(!isset($allowed_tags)) $allowed_tags = '';
+if(!isset($recentdays)) $recentdays = '7';
+if(!isset($sitename )) $sitename  = '';
+if(!isset($url )) $url  = '';
+if(!isset($multiplecats )) $multiplecats  = '';
+if(!isset($minwords )) $minwords  = '';
+if(!isset($maxwords )) $maxwords  = '';
+if(!isset($action )) $action  = '';
+if(!isset($pwdsetting )) $pwdsetting  = '';
+if(!isset($imagewidth )) $imagewidth  = '';
+if(!isset($imageheight )) $imageheight = '';
+if(!isset($version)) $version  = '';
+
 
 define('_ACTIONSUCCESSFUL', 'The action was successful.');
 define('_ACTIONCANCELLED', 'The requested action was cancelled.');
