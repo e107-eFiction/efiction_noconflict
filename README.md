@@ -41,27 +41,26 @@ rename to searching.php for efiction
 
 ### news.php
 
-removed
+renamed to ffnews.php for efiction
 
 ### index.php
-e107 has to be used
-- added recent menu to e107 menus
 
-- if you use it (you can), it will be overriden with e107 github sync, so just have backup
+- with efiction and e107 on the same level, only one can be used. e107 index.php is recommended because possibility of github synchronization. 
+- it could be renamed to efiction.php  
 
 ### contact.php
 
-file can't be deleted because reporting 
+renamed to report.php
 
-Just notes: 
+## Other changes
 
-## Replaced functionality (it is already inbuilt in e107)
+Deleted docs. Content was moved to:
 
-* Welcome message - delete from panels
-* PHP info - delete from panels
-* Custom pages - delete from panels
+https://docs.e107sk.com/efiction-3-5-5/
 
-## Moved admin functionality 
+Deleted bridges. 
+e107 Alt Auth plugin is better alternative.
 
-* Custom pages (messages)  - efiction plugin, {FANFICTION_MESSAGES=message_name} for using in themes
+
+
 
