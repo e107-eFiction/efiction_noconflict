@@ -36,7 +36,7 @@ if(!defined("_CHARSET")) exit( );
 	   $ch = curl_init();
 
 	   // set the url to fetch
-	   curl_setopt($ch, CURLOPT_URL, 'http://www.efiction.org/version.txt');
+	   curl_setopt($ch, CURLOPT_URL, 'https://www.efiction.org/version.txt');
 
 	   // don't give me the headers just the content
 	   curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -63,7 +63,7 @@ if(!defined("_CHARSET")) exit( );
 	else if(ini_get("allow_url_fopen")) {
 		$output .= write_message(_RUNNINGVERSION);
 
-		$location = fopen ("http://efiction.org/version.txt", "r");
+		$location = fopen ("https://efiction.org/version.txt", "r");
 		$buffer = '';
 		while (!feof ($location)) {
 			$buffer .= fgets($location, 4096);
