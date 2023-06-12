@@ -38,6 +38,11 @@ define("T_BYFILE", 0);
 define("T_BYVAR", 1);
 define("TP_ROOTBLOCK", '_ROOT');
 
+
+//https://php.watch/versions/8.2/dynamic-properties-deprecated
+
+
+#[AllowDynamicProperties]
 class TemplatePowerParser
 {
   protected $tpl_base;              //Array( [filename/varcontent], [T_BYFILE/T_BYVAR] )
