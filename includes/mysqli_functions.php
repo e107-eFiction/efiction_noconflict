@@ -9,7 +9,7 @@ function dbconnect($dbhost, $dbuser, $dbpass, $dbname ) {
 		include(_BASEDIR."languages/en.php"); // Because we haven't got a language set yet.
 		die(_FATALERROR." "._NOTCONNECTED);
 	}
-	mysqli_query($mysql_access, "SET SESSION sql_mode = 'MYSQL40'");
+	mysqli_query($mysql_access, "SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
     mysqli_query($mysql_access, "SET NAMES UTF8;");
 	return $mysql_access;
 }
