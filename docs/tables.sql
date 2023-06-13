@@ -26,7 +26,7 @@ CREATE TABLE `fanfiction_authorinfo` (
   `info` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`uid`,`field`),
   KEY `uid` (`uid`)
-) REPLACE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
