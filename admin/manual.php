@@ -24,9 +24,8 @@
 
 if(!defined("_CHARSET")) exit( );
 
-if(file_exists("docs/adminmanual_{$language}.htm")) $file = "docs/adminmanual_{$language}.htm";
-else $file = "docs/adminmanual_en.htm";
-$log_file = @fopen($file, "r");
-$output .= @fread($log_file, filesize($file));
-@fclose($log_file);
-?>
+$caption .= " - "._MANUAL;
+
+$output = '<a class="btn btn-primary w-25" href="https://docs.e107sk.com/efiction-3-5-5/" target="_blank" rel="nofollow" >Click here to open backup of Admin manual for efiction 3.5.5</a>' ;
+ 
+ 
