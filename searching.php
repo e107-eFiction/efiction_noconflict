@@ -252,7 +252,7 @@ if(isset($_POST['submit']) || isset($_GET['offset'])) {
 }
 else {
 	if($searchtype == "simple") {
-		$output .= "<div id=\"pagetitle\">"._SIMPLE."</div><div style='text-align: center;'><form method=\"post\" enctype=\"multipart/form-data\" action=\"search.php\">
+		$output .= "<div id=\"pagetitle\">"._SIMPLE."</div><div style='text-align: center;'><form method=\"post\" enctype=\"multipart/form-data\" action=\"searching.php\">
 		<div class=\"tblborder\" style=\"width: 320px; padding: 5px; margin: 0 auto;\">
 		<select name=\"searchtype\">
 		<option value=\"penname\">"._PENNAME."</option>
@@ -262,11 +262,11 @@ else {
 			$output .= "<option value=\"fulltext\">"._FULLTEXT."</option>";
 		$output .= "</select> <INPUT type=\"text\" class=\"textbox\" name=\"searchterm\" size=\"20\"> ";
 		$output .= "<INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\" size=\"20\">
-		<div style=\"font-size: 8pt; text-align: right;\"><a href=\"search.php?searchtype=advanced\">"._ADVANCED."</a></div></div></form></div>";
+		<div style=\"font-size: 8pt; text-align: right;\"><a href=\"searching.php?searchtype=advanced\">"._ADVANCED."</a></div></div></form></div>";
 	}
 	else {
 		$output .= "<div id=\"pagetitle\">"._ADVANCED."</div><div>
-			<form method=\"POST\" name=\"form\" enctype=\"multipart/form-data\" action=\"search.php?searchtype=advanced\">
+			<form method=\"POST\" name=\"form\" enctype=\"multipart/form-data\" action=\"searching.php?searchtype=advanced\">
 			<div class=\"tblborder\" style=\"width: 90%; margin: 0 auto; padding: 10px;\">";
 		if($multiplecats) {
 			include("includes/categories.php");

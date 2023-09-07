@@ -255,7 +255,7 @@ switch ($_GET['step'])
 				$output .= "<tr><td>Welcome</td><td align='center'>" . ($msg ? "<img src=\"../images/check.gif\">" : "<img src=\"../images/X.gif\">") . "</td></tr>";
 				$msg = dbquery("INSERT INTO `" . $tableprefix . "fanfiction_messages` VALUES (2, 'copyright', '', 'This is your sample copyright footer.  Include it in your footer.tpl with <b>{footer}</b><br />\r\n<u>Disclaimer:</u>  All publicly recognizable characters, settings, etc. are the property of their respective owners.  The original characters and plot are the property of the author.  No money is being made from this work.  No copyright infringement is intended.\r\n');");
 				$output .= "<tr><td>Copyright</td><td align='center'>" . ($msg ? "<img src=\"../images/check.gif\">" : "<img src=\"../images/X.gif\">") . "</td></tr>";
-				$msg = dbquery("INSERT INTO `" . $tableprefix . "fanfiction_messages` VALUES (3, 'help', 'Help', '<h3>FAQ</h3><p><strong>I forgot my password!&nbsp; What do I do now?</strong></p><p>To recover a lost password, <a href=\"user.php?action=lostpassword\">click here</a> and enter the e-mail address with which you registered.&nbsp; Your password will be sent to you shortly.</p><p><strong>What kinds of stories are allowed?</strong></p><p>See our <a href=\"submission.php\">Submission Rules.</a></p><p><strong>How do I contact the site administrators?</strong></p><p>You can e-mail us via our <a href=\"contact.php\">contact form.</a></p><p><strong>How do I submit stories?</strong></p><p>If you have not already done so, please <a href=\"user.php?action=newaccount\">register for an account</a>. Once you\'ve logged in, click on <a href=\"user.php\">Account Information</a> and choose <a href=\"stories.php?action=newstory\">Add Story</a>.&nbsp; The form presented there will allow you to submit your story.</p><p><strong>What are the ratings used on the site?</strong></p><p>We use the ratings system from <a href=\"http://www.fictionratings.com/\">www.fictionratings.com</a>.</p><p><strong>What are the story classifications?</strong></p><p>Stories are classified by categories, genres, and warnings.</p>');");
+				$msg = dbquery("INSERT INTO `" . $tableprefix . "fanfiction_messages` VALUES (3, 'help', 'Help', '<h3>FAQ</h3><p><strong>I forgot my password!&nbsp; What do I do now?</strong></p><p>To recover a lost password, <a href=\"user.php?action=lostpassword\">click here</a> and enter the e-mail address with which you registered.&nbsp; Your password will be sent to you shortly.</p><p><strong>What kinds of stories are allowed?</strong></p><p>See our <a href=\"submission.php\">Submission Rules.</a></p><p><strong>How do I contact the site administrators?</strong></p><p>You can e-mail us via our <a href=\"report.php\">contact form.</a></p><p><strong>How do I submit stories?</strong></p><p>If you have not already done so, please <a href=\"user.php?action=newaccount\">register for an account</a>. Once you\'ve logged in, click on <a href=\"user.php\">Account Information</a> and choose <a href=\"stories.php?action=newstory\">Add Story</a>.&nbsp; The form presented there will allow you to submit your story.</p><p><strong>What are the ratings used on the site?</strong></p><p>We use the ratings system from <a href=\"http://www.fictionratings.com/\">www.fictionratings.com</a>.</p><p><strong>What are the story classifications?</strong></p><p>Stories are classified by categories, genres, and warnings.</p>');");
 				$output .= "<tr><td>Help</td><td align='center'>" . ($msg ? "<img src=\"../images/check.gif\">" : "<img src=\"../images/X.gif\">") . "</td></tr>";
 				$msg = dbquery("INSERT INTO `" . $tableprefix . "fanfiction_messages` VALUES (4, 'nothankyou', 'Submission Rejection', 'Your recent submission of \"{storytitle} : {chaptertitle}\" to {sitename} did not meet our requirements for submission.  Please review our {rules}.<br /><br />\r\n\r\n{adminname}');");
 				$output .= "<tr><td>Rejection Letter</td><td align='center'>" . ($msg ? "<img src=\"../images/check.gif\">" : "<img src=\"../images/X.gif\">") . "</td></tr>";
@@ -324,25 +324,25 @@ switch ($_GET['step'])
 					array("recent", "Most Recent", "browse.php?type=recent", "0", "0"),
 					array("login", "Login", "user.php?action=login", "0", "0"),
 					array("adminarea", "Admin", "admin.php", "0", "2"),
-					array("logout", "Logout", "user.php?action=logout", "0", "1"),
+					array("logout", "Logout", "author.php?action=logout", "0", "1"),
 					array("featured", "Featured Stories", "browse.php?type=featured", "0", "0"),
 					array("catslink", "Categories", "browse.php?type=categories", "0", "0"),
 					array("members", "Members", "authors.php?action=list", "0", "0"),
 					array("authors", "Authors", "authors.php?list=authors", "0", "0"),
 					array("help", "Help", "viewpage.php?page=help", "0", "0"),
-					array("search", "Search", "search.php", "0", "0"),
+					array("search", "Search", "searching.php", "0", "0"),
 					array("series", "Series", "browse.php?type=series", "0", "0"),
 					array("tens", "Top Tens", "toplists.php", "0", "0"),
 					array("challenges", "Challenges", "modules/challenges/challenges.php", "0", "0"),
-					array("contactus", "Contact Us", "contact.php", "0", "0"),
+					array("contactus", "Contact Us", "report.php", "0", "0"),
 					array("rules", "Rules", "viewpage.php?page=rules", "0", "0"),
 					array("tos", "Terms of Service", "viewpage.php?page=tos", "0", "0"),
 					array("rss", "<img src=\'images/xml.gif\' alt=\'RSS\' border=\'0\'>", "rss.php", "0", "0"),
-					array("login", "Account Info", "user.php", "0", "1"),
+					array("login", "Account Info", "author.php", "0", "1"),
 					array("titles", "Titles", "browse.php?type=titles", "0", "0"),
-					array("register", "Register", "user.php?action=register", "0", "0"),
-					array("lostpassword", "Lost Password", "user.php?action=lostpassword", "0", "0"),
-					array("newsarchive", "News Archive", "news.php", "0", "0"),
+					array("register", "Register", "author.php?action=register", "0", "0"),
+					array("lostpassword", "Lost Password", "author.php?action=lostpassword", "0", "0"),
+					array("newsarchive", "News Archive", "ffnews.php", "0", "0"),
 					array("browse", "Browse", "browse.php", "0", "0"),
 					array("charslink", "Characters", "browse.php?type=characters", "0", "0"),
 					array("ratings", "Ratings", "browse.php?type=ratings", "0", "0"),

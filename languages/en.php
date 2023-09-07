@@ -55,7 +55,7 @@ define ("_DOWN", "down arrow");
 define ("_EDIT", "Edit");
 define ("_EDITFAVORITES", "Edit Favorites");
 define ("_EMAIL", "E-mail");
-define ("_EMAILFAILED", "The email could not be sent.  Please <a href='"._BASEDIR."contact.php'>contact the administrator</a> to report this problem.");
+define ("_EMAILFAILED", "The email could not be sent.  Please <a href='"._BASEDIR."report.php'>contact the administrator</a> to report this problem.");
 define ("_ERROR", "<strong>Error!</strong>We encountered an error.  Please go back and try again.");
 define ("_FATALERROR", "<b>A fatal MySQL error was encountered.</b><br />");
 define ("_FSTORY", "Feature");
@@ -193,7 +193,7 @@ define ("_FULLTEXT", "Full Text");
 define ("_INCLUDE", "to Include");
 define ("_RESULTS", "Search Results");
 define ("_SEARCHTERM", "Search term");
-define ("_SEARCHTERMTOOSHORT", "Your search term was too short.  Your search term must be a minimum of three characters long. <a href='search.php'>Try again.</a>");
+define ("_SEARCHTERMTOOSHORT", "Your search term was too short.  Your search term must be a minimum of three characters long. <a href='searching.php'>Try again.</a>");
 define ("_SIMPLE", "Simple Search");
 define ("_WORDCOUNT", "Word count");
 define ("_SEARCH", "Search");
@@ -365,7 +365,7 @@ define ("_REMOVEFAV", "Remove Favorite");
 // User - Login
 
 define ("_WRONGPASSWORD", "That password doesn't match the one in our database. Please <a href=\"user.php?action=login\">try again</a> or retrieve a <a href=\"user.php?action=lostpassword\">new password</a> if you can't remember yours.");
-define ("_ACCOUNTLOCKED", "This account has been locked by the adminstrators of this site.  Please <a href='contact.php'>contact</a> the site adminstrators for more information.");
+define ("_ACCOUNTLOCKED", "This account has been locked by the adminstrators of this site.  Please <a href='report.php'>contact</a> the site adminstrators for more information.");
 define ("_NOSUCHACCOUNT", "There is no such account on our website."); // Added 6-18-2008
 
 // User - Review Response
@@ -380,7 +380,7 @@ define ("_ARCHIVEDAT", "This story archived at");
 define ("_BACK2INDEX", "Back to index");
 define ("_CONTINUE", "Continue");
 define ("_CONTRIBUTE2RR", "Contribute to Round Robin");
-define ("_INVALIDSTORY", "That story does not exist on this archive.  You may <a href='search.php'>search</a> for it or return to <a href='index.php'>the home page.</a>");
+define ("_INVALIDSTORY", "That story does not exist on this archive.  You may <a href='searching.php'>search</a> for it or return to <a href='index.php'>the home page.</a>");
 define ("_LOGINTOREVIEW", "You must %1\$s (%2\$s) to review.");
 define ("_SUBMITREVIEW", "Submit a Review");
 define ("_TEXTSIZE", "Text Size");

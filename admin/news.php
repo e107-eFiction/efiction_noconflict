@@ -97,7 +97,7 @@ else
 		$news->assign("newsdate", date("$dateformat $timeformat", $stories['date']));
 		$news->assign("oddeven", ($count % 2 ? "even" : "odd"));
 		if ($newscomments == "1")
-			$news->assign("newscomments", "<a href=\"news.php?action=newsstory&amp;nid=" . $stories['nid'] . "\">" . $stories['comments'] . " " . _COMMENTS . "</a>");
+			$news->assign("newscomments", "<a href=\"ffnews.php?action=newsstory&amp;nid=" . $stories['nid'] . "\">" . $stories['comments'] . " " . _COMMENTS . "</a>");
 		if (isADMIN)
 			$news->assign("adminoptions", "<a href=\"admin.php?action=news&amp;form=" . $stories['nid'] . "\">" . _EDIT . "</a> | <a href=\"admin.php?action=news&amp;delete=" . $stories['nid'] . "\">" . _DELETE . "</a>");
 		$count++;
