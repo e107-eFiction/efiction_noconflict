@@ -23,7 +23,8 @@ e107_xxx
 ## Update for fixed 3.3.6
 Changes:
 file user.php -  now author.php  (more logical than member)
-file index.php - no changes
+
+rss.php wasn't updated
 
 
 ## Files
