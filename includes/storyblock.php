@@ -26,19 +26,19 @@ if(!defined("_CHARSET")) exit( );
 	$tpl->assign("sid", $stories['sid']);
 	unset($challengelinks, $challengeadmin, $serieslinks, $categorylinks, $adminlinks, $authlink);
 	if($stories['coauthors'] == 1) {
-		$coauthors = array();
+		$array_coauthors = array();
 		$coauth = dbquery("SELECT "._PENNAMEFIELD." as penname, co.uid FROM ".TABLEPREFIX."fanfiction_coauthors AS co LEFT JOIN "._AUTHORTABLE." ON co.uid = "._UIDFIELD." WHERE co.sid = '".$stories['sid']."'");
 		while($c = dbassoc($coauth)) {
-			$coauthors[$c['uid']] = $c['penname'];
+			$array_coauthors[$c['uid']] = $c['penname'];
 		}
-		$stories['coauthors'] = $coauthors;
-		unset($coauthors);
+		$stories['coauthors'] = $array_coauthors;
+		unset($array_coauthors);
 	}
 	else if(empty($stories['coauthors'])) $stories['coauthors'] = array( );	
 	$tpl->assign("title"   , stripslashes(title_link($stories)) );
 	$tpl->assign("author"   , author_link($stories));
 	$tpl->assign("summary", stripslashes($stories['summary']) );
-	$tpl->assign("rating"   , $ratingslist[$stories['rid']]['name']);
+	$tpl->assign("rating"   , !empty($ratingslist) ? $ratingslist[$stories['rid']]['name'] : "");
 	$tpl->assign("score", ratingpics($stories['rating']) );
 	$tpl->assign("count", $stories['count'] ? $stories['count'] : "0");
 	$allclasslist = "";
@@ -71,7 +71,7 @@ if(!defined("_CHARSET")) exit( );
 	if(count($storycodeblocks)) foreach($storycodeblocks as $c) { eval($c); } 
 	$tpl->assign("classifications", $allclasslist);
 	$seriesquery = "SELECT series.* FROM ".TABLEPREFIX."fanfiction_inseries as list, ".TABLEPREFIX."fanfiction_series as series WHERE list.sid = '".$stories['sid']."' AND series.seriesid = list.seriesid";
-	$seriesresult = dbquery($seriesquery) or die(_FATALERROR."<br>Query: $seriesquery<br>Error: (".mysql_errno( ).") ".mysql_error( ));
+	$seriesresult = dbquery($seriesquery) or die(_FATALERROR."<br>Query: $seriesquery<br>Error: (". $dbconnect->errno.") ". $dbconnect->error);
 	$serieslinks = array( );
 	while($s = dbassoc($seriesresult)) {
 		if(isset($action) && $action == "printable") $serieslinks[] = stripslashes($s['title']);
@@ -86,7 +86,7 @@ if(!defined("_CHARSET")) exit( );
 	$tpl->assign("ratingpics"   , ratingpics($stories['rating']) );
 	$tpl->assign("reviews"   , ($reviewsallowed ? "<a href=\""._BASEDIR."reviews.php?type=ST&amp;item=".$stories['sid']."\">"._REVIEWS."</a>" : "") );
 	if(isMEMBER && !empty($favorites)) 
-		$tpl->assign("addtofaves", "[<a href=\""._BASEDIR."member.php?action=favst&amp;add=1&amp;sid=".$stories['sid']."\">"._ADDSTORY2FAVES."</a>] [<a href=\""._BASEDIR."member.php?action=favau&amp;add=".$stories['uid'].(count($stories['coauthors']) ? ",".implode(",", array_keys($stories['coauthors'])) : "")."\">"._ADDAUTHOR2FAVES."</a>]");
+		$tpl->assign("addtofaves", "[<a href=\""._BASEDIR."user.php?action=favst&amp;add=1&amp;sid=".$stories['sid']."\">"._ADDSTORY2FAVES."</a>] [<a href=\""._BASEDIR."user.php?action=favau&amp;add=".$stories['uid'].(count($stories['coauthors']) ? ",".implode(",", array_keys($stories['coauthors'])) : "")."\">"._ADDAUTHOR2FAVES."</a>]");
 	
 	$numchapsquery = dbquery("SELECT count(sid) FROM ".TABLEPREFIX."fanfiction_chapters WHERE sid = '".$stories['sid']."' AND validated > 0");
 	list($chapters) = dbrow($numchapsquery);

@@ -252,7 +252,7 @@ function title_link($stories) {
 				$warning = _AGECHECK." - "._AGECONSENT." ".$warningtext." -- 1";
 			}
 			if($warninglevel[0] && !isMEMBER) {
-				$location = "member.php?action=login&amp;sid=".$stories['sid'];
+				$location = "author.php?action=login&amp;sid=".$stories['sid'];
 				$warning = _RUSERSONLY." - $warningtext";		
 			}
 			if(!empty($warning)) {
@@ -366,7 +366,7 @@ function replace_naughty($text) {
 	$i = 0;
 	for($j = 0; $j < sizeof($words); $j++) {
 		if(strpos($words[$j], "*") === false) {
-			$replace[$i] = str_pad($words[$j]{0}, strlen($words[$j]), "*");
+			$replace[$i] = str_pad($words[$j][0], strlen($words[$j]), "*");
 			$naughtywords[$i] = '/\b('.$words[$j].'\b)|('.build_word($words[$j]).')\b/i';
 			$i++;
 		}
@@ -523,7 +523,7 @@ function charlist($characters) {
 }
 
 // Most of the pages that list stories and series use this fuction.  This handles showing the series and stories and pagination of the two together when needed
-function search($storyquery, $countquery, $pagelink = "searching.php?", $pagetitle = 0) {
+function search($storyquery, $countquery, $pagelink = "search.php?", $pagetitle = 0) {
 	global $tpl, $new, $ratingslist, $itemsperpage, $reviewsallowed, $output, $dateformat, $current, $featured, $favorites, $retired, $ageconsent, $classtypelist, $classlist, $offset, $recentdays;
      
 	$count = dbquery($countquery);

@@ -45,7 +45,7 @@ else {
 			$itemcount = 0;
 			$countquery = dbquery("SELECT COUNT(item) FROM ".TABLEPREFIX."fanfiction_favorites WHERE uid = '$uid' AND type = '$type'");
 			list($itemcount) = dbrow($countquery);
-			if(empty($panel['panel_url'])) $output .=  "<a href=\"member.php?action=".$panel['panel_name']."\">".$panel['panel_title']." [$itemcount]</a><br />\n";
+			if(empty($panel['panel_url'])) $output .=  "<a href=\"author.php?action=".$panel['panel_name']."\">".$panel['panel_title']." [$itemcount]</a><br />\n";
 			else $output .= "<a href=\"".$panel['panel_url']."\">".$panel['panel_title']." [$itemcount]</a><br />\n";
 		}
 	}

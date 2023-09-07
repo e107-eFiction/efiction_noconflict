@@ -45,7 +45,7 @@ if(!defined("_CHARSET")) exit( );
 			$result = dbquery("SELECT * FROM ".TABLEPREFIX."fanfiction_authorprefs WHERE uid = '".USERUID."' LIMIT 1");
 		}
 		$user = dbassoc($result);
-		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" style='width: 425px; margin: 0 auto;' action=\"member.php?action=editprefs\">
+		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" style='width: 425px; margin: 0 auto;' action=\"author.php?action=editprefs\">
 		<label for='newreviews'>"._CONTACTREVIEWS.":</label> <INPUT name=\"newreviews\" type=\"checkbox\" class=\"checkbox\"".($user['newreviews'] ? " checked" : "")."> <A HREF=\"#\" class=\"pophelp\">[?]<span>"._HELP_NEWREV."</span></A><br />
 		<label for='newrespond'>"._CONTACTRESPOND.":</label> <INPUT name=\"newrespond\" type=\"checkbox\" class=\"checkbox\"".($user['newrespond'] ? " checked" : "")."><A HREF=\"#\" class=\"pophelp\">[?]<span>"._HELP_NEWRESP."</span></A><br />";
 		if($alertson) 

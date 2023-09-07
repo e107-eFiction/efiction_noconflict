@@ -19,6 +19,13 @@ e107_fanfiction_xxx
 All e107 tables will look:
 e107_xxx
 
+
+## Update for fixed 3.3.6
+Changes:
+file user.php -  now author.php  (more logical than member)
+file index.php - no changes
+
+
 ## Files
 
 Only problem if you use e107 and efiction on the same level (what is the final goal):

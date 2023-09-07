@@ -49,7 +49,7 @@ function updatePanelOrder( ) {
 	}
 }
 
-if(isset($action) && $action == "settings") {
+if($action == "settings") {
 $output .= "<h1>"._SETTINGS."</h1><div style='text-align: center;'>
 	<a href='admin.php?action=settings&amp;sect=main'>"._MAINSETTINGS."</a> |
 	<a href='admin.php?action=settings&amp;sect=submissions'>"._SUBMISSIONSETTINGS."</a> |
@@ -105,7 +105,7 @@ if(isset($_POST['submit'])) {
 		$submissionsoff = $_POST['newsubmissionsoff'] == 1 ? 1 : 0;
 		$autovalidate = $_POST['newautovalidate'] == 1 ? 1 : 0;
 		$coauthallowed = $_POST['newcoauthallowed'] == 1 ? 1 : 0;
-		$store = !empty($_POST['newstore']) ? $_POST['newstore'] == "files" ? "files" : "mysql" : $store;
+		$store = !empty($_POST['newstore']) ? ($_POST['newstore'] == "files" ? "files" : "mysql" ) : $store;
 		$storiespath = descript($_POST['newstoriespath']);
 		$minwords = isNumber($_POST['newminwords']) ? $_POST['newminwords'] : 0;
 		$maxwords = isNumber($_POST['newmaxwords']) ? $_POST['newmaxwords'] : 0;
@@ -178,11 +178,13 @@ if(isset($_POST['submit'])) {
 }
 	$settingsresults = dbquery("SELECT * FROM ".$settingsprefix."fanfiction_settings WHERE sitekey ='".SITEKEY."'");
 	$settings = dbassoc($settingsresults);
+ 
 	foreach($settings as $var => $val) {
-		$$var = stripslashes($val);
+		if(is_NULL($val)) $val = '';
+		$$var = stripslashes($val );
 	}
 
-	$output .= "<form method='POST' class='tblborder' style='' enctype='multipart/form-data' action='".(isset($action) &&  $action == "settings" ? "admin.php?action=settings" : $_SERVER['PHP_SELF']."?step=".$_GET['step'])."&amp;sect=$sect'>";
+	$output .= "<form method='POST' class='tblborder' style='' enctype='multipart/form-data' action='".($action == "settings" ? "admin.php?action=settings" : $_SERVER['PHP_SELF']."?step=".$_GET['step'])."&amp;sect=$sect'>";
 	if($sect == "main") {
 		$output .= "<h2>"._SITEINFO."</h2>
 		<table class='acp'>

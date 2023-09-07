@@ -164,10 +164,10 @@ else if($action == "edit" || $action == "add") {
 				$uidquery = dbquery("SELECT uid,title, coauthors FROM ".TABLEPREFIX."fanfiction_stories WHERE sid = '$item'");
 				list($author, $title, $coauthors) = dbrow($uidquery);
 				if($coauthors) {
-					$coauthors = array( );
+					$array_coauthors = array( );
 					$coQuery = dbquery("SELECT uid FROM ".TABLEPREFIX."fanfiction_coauthors WHERE sid = '$item'");
 					while($c = dbassoc($coQuery)) {
-						$coauthors[] = $c['uid'];
+						$array_coauthors[] = $c['uid'];
 					}
 				}
 			}
@@ -186,7 +186,7 @@ else if($action == "edit" || $action == "add") {
 				}
 			}
 			if($review != "No Review" && $action == "add") {
-				$mailquery= dbquery("SELECT ap.newreviews,"._EMAILFIELD." as email, "._PENNAMEFIELD." as penname FROM "._AUTHORTABLE." LEFT JOIN ".TABLEPREFIX."fanfiction_authorprefs as ap ON ap.uid = "._UIDFIELD." WHERE "._UIDFIELD." = '$author' ".(!empty($coauthors) ? " OR ".findclause(_UIDFIELD, $coauthors) : ""));
+				$mailquery= dbquery("SELECT ap.newreviews,"._EMAILFIELD." as email, "._PENNAMEFIELD." as penname FROM "._AUTHORTABLE." LEFT JOIN ".TABLEPREFIX."fanfiction_authorprefs as ap ON ap.uid = "._UIDFIELD." WHERE "._UIDFIELD." = '$author' ".(!empty($coauthors) ? " OR ".findclause(_UIDFIELD, $array_coauthors) : ""));
 				while($mail = dbassoc($mailquery)) {
 					if($mail['newreviews']) {
 						include_once("includes/emailer.php");
@@ -219,8 +219,8 @@ else if($action == "edit" || $action == "add") {
 					}
 				}
 				$reviewname = $reviewer."(".$_SERVER['REMOTE_ADDR'].")";
-				if($action == "add") dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`) VALUES('".escapestring(sprintf(_LOG_REVIEW, $reviewname, truncate_text($review), $title))."', '0', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'RE')");
-				else dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`) VALUES('".escapestring(sprintf(_LOG_EDIT_REVIEW, USERPENNAME, USERUID, $title, $reviewid))."', '0', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'RE')");
+				if($action == "add") dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`, `log_timestamp`) VALUES('".escapestring(sprintf(_LOG_REVIEW, $reviewname, truncate_text($review), $title))."', '0', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'RE', " . time() . ")");
+				else dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`, `log_timestamp`) VALUES('".escapestring(sprintf(_LOG_EDIT_REVIEW, USERPENNAME, USERUID, $title, $reviewid))."', '0', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'RE', " . time() . ")");
 			}
 		}
 	}
@@ -247,10 +247,11 @@ else {
 		$story = dbassoc($storyquery);
 		$title = title_link($story);
 		$authoruid = $story['uid'];
+		$array_coauthors = array();
 		if(!empty($story['coauthors'])) {
 			$colist = dbquery("SELECT uid FROM ".TABLEPREFIX."fanfiction_coauthors WHERE sid = '$item'");
 			while($c = dbassoc($colist)) {
-				$coauthors[] = $c['uid'];
+				$array_coauthors[] = $c['uid'];
 			}
 		}
 	}
@@ -308,7 +309,7 @@ else {
 			$jumpmenu .= "</select></form>";
 		}
 		$tpl->assign("jumpmenu", $jumpmenu );
-		$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, UNIX_TIMESTAMP(review.date) as date, series.title as seriestitle, stories.title as title FROM ".TABLEPREFIX."fanfiction_reviews as review LEFT JOIN ".TABLEPREFIX."fanfiction_series as series ON review.item = series.seriesid AND review.type = 'SE' LEFT JOIN ".TABLEPREFIX."fanfiction_stories as stories ON stories.sid = review.item AND review.type ='ST' WHERE 
+		$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, review.date as date, series.title as seriestitle, stories.title as title FROM ".TABLEPREFIX."fanfiction_reviews as review LEFT JOIN ".TABLEPREFIX."fanfiction_series as series ON review.item = series.seriesid AND review.type = 'SE' LEFT JOIN ".TABLEPREFIX."fanfiction_stories as stories ON stories.sid = review.item AND review.type ='ST' WHERE 
 			((series.seriesid = '$item' AND series.seriesid = review.item AND review.type = 'SE')".
 			(isset($storylist) ? " OR (FIND_IN_SET(review.item, '".(implode(",", $storieslist))."') > 0 AND review.type = 'ST')" : "").
 			(isset($serieslist) ? " OR (FIND_IN_SET(item, '".(implode(",", $serieslist))."') > 0 AND type = 'SE')" : "").
@@ -318,11 +319,11 @@ else {
 	}
 	else if($type == "ST") {
 		if(isset($chapid))  {
-			$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, UNIX_TIMESTAMP(date) as date, chapter.title as title, chapter.inorder as inorder FROM ".TABLEPREFIX."fanfiction_reviews as review, ".TABLEPREFIX."fanfiction_chapters as chapter WHERE chapter.chapid = '$chapid' AND chapter.chapid = review.chapid AND review.review != 'No Review' ";
+			$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, date as date, chapter.title as title, chapter.inorder as inorder FROM ".TABLEPREFIX."fanfiction_reviews as review, ".TABLEPREFIX."fanfiction_chapters as chapter WHERE chapter.chapid = '$chapid' AND chapter.chapid = review.chapid AND review.review != 'No Review' ";
 			$count =  "SELECT count(reviewid) FROM ".TABLEPREFIX."fanfiction_reviews as review WHERE chapid = '$chapid' AND review != 'No Review'";
 		}
 		else  {
-			$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, UNIX_TIMESTAMP(review.date) as date, chapter.title as title, chapter.inorder as inorder FROM ".TABLEPREFIX."fanfiction_reviews as review, ".TABLEPREFIX."fanfiction_chapters as chapter WHERE chapter.sid = '$item' AND chapter.chapid = review.chapid AND review.review != 'No Review' AND review.type = 'ST'";
+			$query = "SELECT review.reviewid, review.respond, review.review, review.uid, review.reviewer, review.rating, review.date as date, chapter.title as title, chapter.inorder as inorder FROM ".TABLEPREFIX."fanfiction_reviews as review, ".TABLEPREFIX."fanfiction_chapters as chapter WHERE chapter.sid = '$item' AND chapter.chapid = review.chapid AND review.review != 'No Review' AND review.type = 'ST'";
 			$count = "SELECT count(reviewid) FROM ".TABLEPREFIX."fanfiction_reviews as review WHERE item = '$item' AND review != 'No Review' AND type = 'ST'";
 		}
 		$jumpmenu = "<form name=\"jump\" action=\"\">";
@@ -379,10 +380,10 @@ else {
 			$reviewer = $reviews['reviewer'];
 			$member = _ANONYMOUS;
 		}
-		if(empty($reviews['respond']) && (USERUID == $authoruid || (isset($coauthors) && in_array(USERUID, $coauthors)))) $adminlink .= " [<a href=\"member.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
+		if(empty($reviews['respond']) && (USERUID == $authoruid || (isset($array_coauthors) && in_array(USERUID, $array_coauthors)))) $adminlink .= " [<a href=\"user.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
 		$tpl->newBlock("reviewsblock");
 		$tpl->assign("reviewer"   , $reviewer );
-		$tpl->assign("reportthis", "[<a href=\""._BASEDIR."report.php?action=report&amp;url=reviews.php?reviewid=".$reviews['reviewid']."\">"._REPORTTHIS."</a>]");
+		$tpl->assign("reportthis", "[<a href=\""._BASEDIR."contact.php?action=report&amp;url=reviews.php?reviewid=".$reviews['reviewid']."\">"._REPORTTHIS."</a>]");
 		$tpl->assign("review"   , stripslashes($reviews['review']));
 		$tpl->assign("reviewdate", date("$dateformat $timeformat", $reviews['date']) );
 		$tpl->assign("rating", ratingpics($reviews['rating']) );

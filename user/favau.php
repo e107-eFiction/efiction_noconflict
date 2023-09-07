@@ -36,6 +36,8 @@ if(empty($favorites)) accessDenied( );
 	$edit = isset($_GET['edit']) && isNumber($_GET['edit']) ? $_GET['edit'] : false;
 	$author = explode(",", $add);
 	$author = array_filter($author, "isNumber");
+	$array_pennames = array();
+	$pennames = '';
 	if(($add || $edit || $delete) && !isMEMBER) accessDenied( );
 
 	if(isMEMBER && $uid == USERUID) {
@@ -69,9 +71,9 @@ if(empty($favorites)) accessDenied( );
 				else {
 					$pQuery = dbquery("SELECT "._PENNAMEFIELD." as penname FROM "._AUTHORTABLE." WHERE ".findclause(_UIDFIELD, $author));
 					while($pRes = dbassoc($pQuery)) {
-						$pennames[] = $pRes['penname'];
+						$array_pennames[] = $pRes['penname'];
 					}
-					$pennames = implode(", ", $pennames);
+					$pennames = implode(", ", $array_pennames);
 				}
 				$output = "<div class='sectionheader'>"._ADDTOFAVORITES.": ".$pennames."</div>";
 			}
@@ -86,14 +88,14 @@ if(empty($favorites)) accessDenied( );
 					$author = array($edit);
 					$pQuery = dbquery("SELECT "._PENNAMEFIELD." as penname FROM "._AUTHORTABLE." WHERE ".findclause(_UIDFIELD, $author));
 					while($pRes = dbassoc($pQuery)) {
-						$pennames[] = $pRes['penname'];
+						$array_pennames[] = $pRes['penname'];
 					}
-					$pennames = implode(", ", $pennames);
+					$pennames = implode(", ", $array_pennames);
 					$output .= "<div class='sectionheader'>"._ADDTOFAVORITES.": ".$pennames."</div>";
 				}
 			}
 			$author = implode(",", $author);
-			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=favau&amp;".( $add ? "add=$author" : "edit=$edit")."\">\n
+			$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"author.php?action=favau&amp;".( $add ? "add=$author" : "edit=$edit")."\">\n
 				<div style=\"width: 350px; margin: 0 auto; text-align: left;\"><label for=\"comments\">"._COMMENTS.":</label><br />
 				<textarea class=\"textbox\" name=\"comments\" id=\"comments\" cols=\"40\" rows=\"5\">".(isset($info['comments']) ? $info['comments'] : "")."</textarea><br />
 				<INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></div></form>";
@@ -114,7 +116,7 @@ if(empty($favorites)) accessDenied( );
 					$cmt->newBlock("comment");
 					$cmt->assign("comment", format_story($author['comments']));
 					if(USERUID == $uid) 
-					$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"member.php?action=favau&amp;edit=".$author['uid']."\">"._EDIT."</a> | <a href=\"member.php?action=favau&amp;delete=".$author['uid']."\">"._REMOVEFAV."</a></div>");
+					$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"author.php?action=favau&amp;edit=".$author['uid']."\">"._EDIT."</a> | <a href=\"author.php?action=favau&amp;delete=".$author['uid']."\">"._REMOVEFAV."</a></div>");
 					$cmt->assign("oddeven", ($x % 2 ? "odd" : "even"));
 					$output .= $cmt->getOutputContent( );
 					$x++;

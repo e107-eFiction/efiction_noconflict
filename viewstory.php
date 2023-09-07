@@ -32,16 +32,16 @@ else $textsize = 0;
 if(empty($chapter)) $chapter = isset($_GET['chapter']) && isNumber($_GET['chapter']) ? $_GET['chapter'] : false;
 
 	// Get the story information
-	$storyquery = dbquery("SELECT "._PENNAMEFIELD." as penname, "._UIDFIELD." as uid, story.*, UNIX_TIMESTAMP(story.date) as date, UNIX_TIMESTAMP(story.updated) as updated, story.validated as valid FROM ".TABLEPREFIX."fanfiction_stories as story, "._AUTHORTABLE." WHERE story.sid = '".$sid."' AND story.uid = "._UIDFIELD);
+	$storyquery = dbquery("SELECT "._PENNAMEFIELD." as penname, "._UIDFIELD." as uid, story.*, story.date as date, story.updated as updated, story.validated as valid FROM ".TABLEPREFIX."fanfiction_stories as story, "._AUTHORTABLE." WHERE story.sid = '".$sid."' AND story.uid = "._UIDFIELD);
 	$storyinfo = dbassoc($storyquery);
 	if($storyinfo['coauthors'] == 1) {
-		$coauthors = array();
+	$array_coauthors = array();
 		$coauth = dbquery("SELECT "._PENNAMEFIELD." as penname, co.uid FROM ".TABLEPREFIX."fanfiction_coauthors AS co LEFT JOIN "._AUTHORTABLE." ON co.uid = "._UIDFIELD." WHERE co.sid = '".$sid."'");
 		while($c = dbassoc($coauth)) {
-			$coauthors[$c['uid']] = $c['penname'];
+		$array_coauthors[$c['uid']] = $c['penname'];
 		}
-		$storyinfo['coauthors'] = $coauthors;
-		unset($coauthors);
+		$storyinfo['coauthors'] = $array_coauthors;
+		unset($array_coauthors);
 	}
 	else $storyinfo['coauthors'] = array();
 	//  Check that the story is valid and that the visitor has permissions to read this story
@@ -315,7 +315,7 @@ else {
 	if(isADMIN && uLEVEL < 3) 
 		$adminlinks = "<div class=\"adminoptions\"><span class='label'>"._ADMINOPTIONS.":</span> "._EDIT." - <a href=\"stories.php?action=editstory&amp;sid=$sid&amp;admin=1\">"._STORY."</a> "._OR." <a href=\"stories.php?action=editchapter&amp;chapid=$chapid&amp;admin=1\">"._CHAPTER."</a> | "._DELETE." - <a href=\"stories.php?action=delete&amp;sid=$sid&amp;admin=1\">"._STORY."</a> "._OR." <a href=\"stories.php?action=delete&amp;chapid=$chapid&amp;sid=$sid&amp;admin=1\">"._CHAPTER."</a></div>";
 	if(isMEMBER && $favorites) {
-		$jumpmenu2 .= "<option value=\"member.php?action=favst&amp;add=1&amp;sid=$sid\">"._ADDSTORY2FAVES."</option><option value=\"member.php?action=favau&amp;add=1&amp;author=".$stories['uid'].(count($storyinfo['coauthors']) ? ",".implode(",", array_keys($storyinfo['coauthors'])) : "")."\">"._ADDAUTHOR2FAVES."</option>";
+		$jumpmenu2 .= "<option value=\"author.php?action=favst&amp;add=1&amp;sid=$sid\">"._ADDSTORY2FAVES."</option><option value=\"author.php?action=favau&amp;add=1&amp;author=".$stories['uid'].(count($storyinfo['coauthors']) ? ",".implode(",", array_keys($storyinfo['coauthors'])) : "")."\">"._ADDAUTHOR2FAVES."</option>";
 	}
 	if($reviewsallowed ) {
 		if(isMEMBER || $anonreviews) {
@@ -344,7 +344,7 @@ else {
 	if(empty($viewed) || (is_array($viewed) && !in_array($sid, $viewed))) {
 		dbquery("UPDATE ".TABLEPREFIX."fanfiction_stories SET count = count + 1 WHERE sid = '$sid'  LIMIT 1");
 		$viewed[] = $sid;
-		$_SESSION['viewed'] = $viewed;
+		$_SESSION[SITEKEY."_viewed"] = $viewed;
 	}
 	dbquery("UPDATE ".TABLEPREFIX."fanfiction_chapters SET count = count + 1 WHERE chapid = '$chapid' LIMIT 1");
 	// end counters

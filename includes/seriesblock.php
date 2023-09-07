@@ -73,7 +73,7 @@ if(!defined("_CHARSET")) exit( );
 	if(count($seriescode)) foreach($seriescode as $c) { eval($c); } 
 	$tpl->assign("classifications", $allclasslist);
 	if(isMEMBER && $favorites) {
-		$addtofaves = "[<a href=\"member.php?action=favse&amp;uid=".USERUID."&amp;add=".$stories['seriesid']."\">"._ADDSERIES2FAVES."</a>]";
+		$addtofaves = "[<a href=\"author.php?action=favse&amp;uid=".USERUID."&amp;add=".$stories['seriesid']."\">"._ADDSERIES2FAVES."</a>]";
 		if($stories['isopen'] < 2) {
 			$addtofaves .= " [<a href=\"viewuser.php?action=favau&amp;uid=".USERUID."&amp;author=".$stories['uid']."\">"._ADDAUTHOR2FAVES."</a>]";
 		}

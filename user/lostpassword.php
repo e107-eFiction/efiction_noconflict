@@ -66,14 +66,14 @@ if(isMEMBER) accessDenied( );
 				}
 				else $output .=  write_message(_EMAILFAILED);
 				if($logging) 
-					dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`) VALUES('".escapestring(sprintf(_LOG_LOST_PASSWORD, $penname, $uid, ($result ? _YES : _NO)))."', '$uid', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'LP')");
+					dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`, `log_timestamp`) VALUES('".escapestring(sprintf(_LOG_LOST_PASSWORD, $penname, $uid, ($result ? _YES : _NO)))."', '$uid', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'LP', " . time() . ")");
 			}
 
 		}
 		else $output .= write_message(_BADEMAIL);
 	}
 	else {
-		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=lostpassword\">
+		$output .= "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"author.php?action=lostpassword\">
 		<table align=\"center\" width=\"300\">
 		<tr><td>"._ENTEREMAIL."</td></tr>
 		<tr><td><INPUT  type=\"text\" class=\"textbox=\" name=\"email\"> <INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></form>

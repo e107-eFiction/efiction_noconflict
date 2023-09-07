@@ -40,17 +40,18 @@ function deleteStory($story) {
 	if($logging) {
 		$authorquery = dbquery("SELECT "._PENNAMEFIELD." as penname FROM "._AUTHORTABLE." WHERE "._UIDFIELD." = '".$story['uid']."' LIMIT 1");
 		list($penname) = dbrow($authorquery);
-		dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`) VALUES('".escapestring(sprintf(_LOG_ADMIN_DEL, USERPENNAME, USERUID, $story['title'], $sid, $penname, $story['uid']))."', '".USERUID."', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'DL')");
+		dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`, `log_timestamp`) VALUES('".escapestring(sprintf(_LOG_ADMIN_DEL, USERPENNAME, USERUID, $story['title'], $sid, $penname, $story['uid']))."', '".USERUID."', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'DL')");
 	}
 	dbquery("DELETE FROM ".TABLEPREFIX."fanfiction_stories WHERE sid = '$sid' LIMIT 1");
 	dbquery("DELETE FROM ".TABLEPREFIX."fanfiction_chapters WHERE sid = '$sid'");
 	dbquery("DELETE FROM ".TABLEPREFIX."fanfiction_reviews WHERE item = '$sid' AND type = 'ST'");
 	dbquery("DELETE FROM ".TABLEPREFIX."fanfiction_favorites WHERE item = '$sid' AND type = 'ST'");
 	// get the coauthors list before we delete the coauthors info.
+	$array_coauthors = array();
 	if($story['coauthors'] == 1) {
 		$coauth = dbquery("SELECT uid FROM ".TABLEPREFIX."fanfiction_coauthors WHERE sid = '$sid'");
 		while($c = dbassoc($coauth)) {
-			$coauthors[] = $c['uid'];
+			$array_coauthors[] = $c['uid'];
 			
 		}
 	}	
@@ -70,9 +71,9 @@ function deleteStory($story) {
 	}
 	if($story['validated'] > 0) {
 		dbquery("UPDATE ".TABLEPREFIX."fanfiction_stats SET stories = stories - 1");
-		if(!empty($coauthors)) {
-			$coauthors[] = $story['uid'];
-			dbquery("UPDATE ".TABLEPREFIX."fanfiction_authorprefs SET stories = stories - 1 WHERE FIND_IN_SET(uid, '".implode(",", $coauthors)."') > 0");
+		if(!empty($array_coauthors)) {
+			$array_coauthors[] = $story['uid'];
+			dbquery("UPDATE ".TABLEPREFIX."fanfiction_authorprefs SET stories = stories - 1 WHERE FIND_IN_SET(uid, '".implode(",", $array_coauthors)."') > 0");
 		}
 		else dbquery("UPDATE ".TABLEPREFIX."fanfiction_authorprefs SET stories = stories - 1 WHERE uid = '".$story['uid']."' LIMIT 1");
 		list($chapters, $words) = dbrow(dbquery("SELECT COUNT(chapid), SUM(wordcount) FROM ".TABLEPREFIX."fanfiction_chapters WHERE validated > 0"));
@@ -96,13 +97,14 @@ function deleteUser($uid) {
 				}
 				else { // Co-authors found...give the story a new author.
 					$cQuery = dbquery("SELECT uid FROM ".TABLEPREFIX."fanfiction_coauthors WHERE sid = '".$story['sid']."' LIMIT 1");
-					$newauthor = 0; $coauthors = array( );
+					$newauthor = 0; $coauthors = 0;
+					$array_coauthors = array();
 					while($cRes= dbassoc($cQuery)) {
 						if(!$newauthor) $newauthor = $cRes['uid'];
-						else $coauthors[] = $cRes['uid'];
+						else $array_coauthors[] = $cRes['uid'];
 					}			
 					if(!empty($newauthor)) {
-						$coauthors = count($coauthors) > 0 ? 1 : 0;
+						$coauthors = count($array_coauthors) > 0 ? 1 : 0;
 						dbquery("UPDATE ".TABLEPREFIX."fanfiction_stories SET uid = '$newauthor', coauthors = '$coauthors' WHERE sid = '".$story['sid']."' LIMIT 1");
 						$chapters = dbquery("SELECT chapid FROM ".TABLEPREFIX."fanfiction_chapters WHERE sid = '".$story['sid']."' AND uid = '$uid'");
 						while($chap = dbassoc($chapters)) {
@@ -188,7 +190,7 @@ function deleteSeries($seriesid) {
 			eval($code['code_text']);
 	}
 	if($logging && isADMIN) {
-		if($uid != USERUID) dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`) VALUES('".escapestring(sprintf(_LOG_ADMIN_DEL_SERIES, USERPENNAME, USERUID, $title))."', '".USERUID."', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'DL')");
+		if($uid != USERUID) dbquery("INSERT INTO ".TABLEPREFIX."fanfiction_log (`log_action`, `log_uid`, `log_ip`, `log_type`, `log_timestamp`) VALUES('".escapestring(sprintf(_LOG_ADMIN_DEL_SERIES, USERPENNAME, USERUID, $title))."', '".USERUID."', INET_ATON('".$_SERVER['REMOTE_ADDR']."'), 'DL', " . time() . ")");
 	}
 }
 ?>

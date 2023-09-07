@@ -37,7 +37,7 @@ else {
 $revcount = dbquery("SELECT COUNT(reviewid) FROM ".TABLEPREFIX."fanfiction_reviews WHERE uid = '$uid' AND review != 'No Review'");
 list($reviewcount) = dbrow($revcount);
 if($reviewcount) {
-	$revquery = dbquery("SELECT rev.*, UNIX_TIMESTAMP(rev.date) as date, "._PENNAMEFIELD." FROM ".TABLEPREFIX."fanfiction_reviews as rev, "._AUTHORTABLE." WHERE rev.uid = "._UIDFIELD." AND rev.uid = '$uid' AND rev.review != 'No Review' ORDER BY type, item LIMIT $offset, $itemsperpage");
+	$revquery = dbquery("SELECT rev.*, rev.date as date, "._PENNAMEFIELD." FROM ".TABLEPREFIX."fanfiction_reviews as rev, "._AUTHORTABLE." WHERE rev.uid = "._UIDFIELD." AND rev.uid = '$uid' AND rev.review != 'No Review' ORDER BY type, item LIMIT $offset, $itemsperpage");
 	$counter = 0;
 	$count = 0;
 	while($reviews = dbassoc($revquery)) {
@@ -84,7 +84,7 @@ if($reviewcount) {
 			$reviewer = $reviews['reviewer'];
 			$member = _ANONYMOUS;
 		}
-		if(!empty($authoruid) && USERUID == $authoruid) $adminlink .= " [<a href=\"member.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
+		if(!empty($authoruid) && USERUID == $authoruid) $adminlink .= " [<a href=\"author.php?action=revres&amp;reviewid=".$reviews['reviewid']."\">"._RESPOND."</a>]";
 		$revlist->newBlock("reviewsblock");
 		$revlist->assign("reviewer"   , $reviewer );
 		$revlist->assign("review"   , $reviews['review']);

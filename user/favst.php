@@ -73,7 +73,7 @@ if(empty($favorites)) accessDenied( );
 			$tpl->newBlock("storyblock");
 			include("includes/storyblock.php");
 			$tpl->gotoBlock("listings");
-			$tpl->assign("pagelinks", "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"member.php?action=favst&amp;".($edit? "edit=$edit" : "add=1")."&amp;sid=".(isset($sid) ? $sid : $edit)."\">\n
+			$tpl->assign("pagelinks", "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"author.php?action=favst&amp;".($edit? "edit=$edit" : "add=1")."&amp;sid=".(isset($sid) ? $sid : $edit)."\">\n
 				<div style=\"width: 350px; margin: 0 auto; text-align: left;\"><label for=\"comments\">"._COMMENTS.":</label><br />
 				<textarea class=\"textbox\" name=\"comments\" id=\"comments\" cols=\"40\" rows=\"5\">".(isset($info['comments']) ? $info['comments'] : "")."</textarea><br />
 				<INPUT type=\"submit\" class=\"button\" name=\"submit\" value=\""._SUBMIT."\"></div></form>");
@@ -81,7 +81,7 @@ if(empty($favorites)) accessDenied( );
 		}
 	}
 	else if(!isset($_POST['submit'])) {
-		$storyquery = "SELECT stories.*, "._PENNAMEFIELD." as penname, fav.comments as comments,  UNIX_TIMESTAMP(stories.date) as date, UNIX_TIMESTAMP(stories.updated) as updated FROM ".TABLEPREFIX."fanfiction_stories as stories, ".TABLEPREFIX."fanfiction_favorites as fav, "._AUTHORTABLE." WHERE fav.uid = '$uid' AND fav.type = 'ST' AND stories.uid = "._UIDFIELD." AND fav.item = stories.sid "._ORDERBY;
+		$storyquery = "SELECT stories.*, "._PENNAMEFIELD." as penname, fav.comments as comments,  stories.date as date, stories.updated as updated FROM ".TABLEPREFIX."fanfiction_stories as stories, ".TABLEPREFIX."fanfiction_favorites as fav, "._AUTHORTABLE." WHERE fav.uid = '$uid' AND fav.type = 'ST' AND stories.uid = "._UIDFIELD." AND fav.item = stories.sid "._ORDERBY;
 		$countquery = dbquery("SELECT COUNT(item) FROM ".TABLEPREFIX."fanfiction_favorites WHERE uid = '$uid' AND type = 'ST' GROUP BY uid");
 		list($storycount) = dbrow($countquery);
 		if($storycount) {
@@ -98,7 +98,7 @@ if(empty($favorites)) accessDenied( );
 				$cmt->newBlock("comment");
 				$cmt->assign("comment", $stories['comments'] ? "<div class='comments'><span class='label'>"._COMMENTS.": </span>".strip_tags($stories['comments'])."</div>" : "");
 				if(USERUID == $uid) 
-				$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"member.php?action=favst&amp;edit=".$stories['sid']."\">"._EDIT."</a> | <a href=\"member.php?action=favst&amp;delete=".$stories['sid']."\">"._REMOVEFAV."</a></div>");
+				$cmt->assign("commentoptions", "<div class='adminoptions'><span class='label'>"._OPTIONS.":</span> <a href=\"author.php?action=favst&amp;edit=".$stories['sid']."\">"._EDIT."</a> | <a href=\"author.php?action=favst&amp;delete=".$stories['sid']."\">"._REMOVEFAV."</a></div>");
 				$cmt->assign("oddeven", ($count % 2 ? "odd" : "even"));
 				$tpl->assign("comment", $cmt->getOutputContent( ));
 				$tpl->gotoBlock( "listings" );
