@@ -1,3 +1,6 @@
+# This version was fully replaced with efiction 3.6.0 
+
+
 # eFiction customized for future combination with e107
 
 ##This is still the standalone efiction version but without conflicts with e107
