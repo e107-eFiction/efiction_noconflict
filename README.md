@@ -1,5 +1,7 @@
 # This version was fully replaced with efiction 3.6.0 
 
+https://github.com/e107-eFiction/efiction-3.6.0
+
 
 # eFiction customized for future combination with e107
 
